@@ -1,9 +1,10 @@
-using System;
-
-class Program
-{
-    static void Main()
-    {
-        Console.WriteLine("Hello, World!");
-    }
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Static Web App</title>
+</head>
+<body>
+    <h1>Hello, Azure Static Web Apps!</h1>
+    <p>This is a simple HTML page hosted on Azure.</p>
+</body>
+</html>
