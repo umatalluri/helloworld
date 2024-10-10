@@ -1,81 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Welcome to MOUSER DEV ENVIRONMENT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Connectivity Test</title>
     <style>
         body {
-            background-color: lightgreen; /* Change to your preferred color */
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
         h1 {
-            font-size: 36px;
-            font-weight: bold;
             text-align: center;
-        }
-        p {
             font-size: 24px;
-            text-align: center;
+            margin-top: 20px;
         }
         .status {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
-            margin-top: 20px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to MOUSER DEV ENVIRONMENT</h1>
-    <div>
-        <p>Test Status</p>
-        <p>This test succeeded invoking a static Azure web app (DEV) from APIM in NON PROD through Application Gateway.</p>
-        
-        <p><strong>Subscription:</strong> IBT_US_MCOM_QA_001 (Spoke)</p>
-        <p><strong>Network:</strong> Using Private Endpoint (Spoke)</p>
-        <p><strong>API:</strong> Configuring App Insights in Hub and sending logs from this Spoke webapp to test the monitoring central solution </p>
-        <p><strong>Front End:</strong> This would be deleted once POC is completed </p>
+    <h1>Website Connectivity Test</h1>
 
-        <!-- Status Sections for Each Site -->
-        <div class="status" id="status-qa">Checking connectivity to <strong>QA</strong>...</div>
-        <div class="status" id="status-pre">Checking connectivity to <strong>PRE</strong>...</div>
-        <div class="status" id="status-dev">Checking connectivity to <strong>DEV</strong>...</div>
-    </div>
+    <div id="qa-status" class="status">Checking connectivity to QA...</div>
+    <div id="pre-status" class="status">Checking connectivity to PRE...</div>
+    <div id="dev-status" class="status">Checking connectivity to DEV...</div>
 
     <script>
-        // List of URLs to test
+        // Array of URLs to test
         const sites = [
-            { url: "https://hello-world2-qa.azurewebsites.net/", elementId: "status-qa", name: "QA" },
-            { url: "https://hello-world2-pre.azurewebsites.net/", elementId: "status-pre", name: "PRE" },
-            { url: "https://hello-world2-dev.azurewebsites.net/", elementId: "status-dev", name: "DEV" }
+            { url: "https://hello-world2-qa.azurewebsites.net/", elementId: "qa-status", name: "QA" },
+            { url: "https://hello-world2-pre.azurewebsites.net/", elementId: "pre-status", name: "PRE" },
+            { url: "https://hello-world2-dev.azurewebsites.net/", elementId: "dev-status", name: "DEV" }
         ];
 
-        // Function to check connectivity for a given site
+        // Function to test reachability using fetch API
         function checkConnectivity(site) {
             fetch(site.url)
             .then(response => {
                 if (response.ok) {
-                    document.getElementById(site.elementId).innerHTML = `Connectivity to ${site.name} (${site.url}) is <span style="color: green;">GOOD</span>`;
+                    document.getElementById(site.elementId).innerHTML = `${site.name} (${site.url}) is reachable (Status: 200)`;
+                    document.getElementById(site.elementId).style.color = 'green';
                 } else {
-                    document.getElementById(site.elementId).innerHTML = `Connectivity to ${site.name} (${site.url}) is <span style="color: red;">BAD</span> (Status: ${response.status})`;
+                    document.getElementById(site.elementId).innerHTML = `${site.name} (${site.url}) is not reachable (Status: ${response.status})`;
+                    document.getElementById(site.elementId).style.color = 'red';
                 }
             })
             .catch(error => {
-                document.getElementById(site.elementId).innerHTML = `Connectivity to ${site.name} (${site.url}) is <span style="color: red;">BAD</span> (Error: ${error.message})`;
+                document.getElementById(site.elementId).innerHTML = `${site.name} (${site.url}) is not reachable (Error: ${error.message})`;
+                document.getElementById(site.elementId).style.color = 'red';
             });
         }
 
-        // Function to check connectivity for all sites
-        function checkAllSites() {
-            sites.forEach(site => {
-                checkConnectivity(site);
-            });
-        }
-
-        // Check all sites every 5 minutes (300,000 milliseconds)
-        setInterval(checkAllSites, 300000); // 5 minutes
-
-        // Initial check on page load
-        checkAllSites();
+        // Check all sites on page load
+        window.onload = function() {
+            sites.forEach(site => checkConnectivity(site));
+        };
     </script>
 </body>
 </html>
