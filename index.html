@@ -1,64 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Connectivity Test</title>
+    <title>Welcome to MOUSER DEV ENVIRONMENT</title>
     <style>
         body {
-            background-color: #f0f0f0;
+            background-color: lightgreen; /* Change to your preferred color */
             font-family: Arial, sans-serif;
         }
         h1 {
-            text-align: center;
-            font-size: 24px;
-            margin-top: 20px;
-        }
-        .status {
-            font-size: 20px;
+            font-size: 36px;
             font-weight: bold;
             text-align: center;
-            margin: 10px 0;
+        }
+        p {
+            font-size: 24px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>Website Connectivity Test</h1>
-
-    <div id="qa-status" class="status">Checking connectivity to QA...</div>
-    <div id="pre-status" class="status">Checking connectivity to PRE...</div>
-    <div id="dev-status" class="status">Checking connectivity to DEV...</div>
-
-    <script>
-        // Array of URLs to test
-        const sites = [
-            { url: "https://hello-world2-qa.azurewebsites.net/", elementId: "qa-status", name: "QA" },
-            { url: "https://hello-world2-pre.azurewebsites.net/", elementId: "pre-status", name: "PRE" },
-            { url: "https://hello-world2-dev.azurewebsites.net/", elementId: "dev-status", name: "DEV" }
-        ];
-
-        // Function to test reachability using fetch API
-        function checkConnectivity(site) {
-            fetch(site.url)
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById(site.elementId).innerHTML = `${site.name} (${site.url}) is reachable (Status: 200)`;
-                    document.getElementById(site.elementId).style.color = 'green';
-                } else {
-                    document.getElementById(site.elementId).innerHTML = `${site.name} (${site.url}) is not reachable (Status: ${response.status})`;
-                    document.getElementById(site.elementId).style.color = 'red';
-                }
-            })
-            .catch(error => {
-                document.getElementById(site.elementId).innerHTML = `${site.name} (${site.url}) is not reachable (Error: ${error.message})`;
-                document.getElementById(site.elementId).style.color = 'red';
-            });
-        }
-
-        // Check all sites on page load
-        window.onload = function() {
-            sites.forEach(site => checkConnectivity(site));
-        };
-    </script>
+    <h1>Welcome to MOUSER DEV ENVIRONMENT</h1>
+    <div>
+        <p>Test Status</p>
+        <p>This test succeeded invoking a static Azure web app (DEV) from APIM in NON PROD through Application Gateway.</p>
+        
+        <p><strong>Subscription:</strong> IBT_US_MCOM_QA_001 (Spoke)</p>
+        <p><strong>Web App Name:</strong> hello-world2-qa.azurewebsites.net (Spoke)</p>
+        <p><strong>Network:</strong> Using Private Endpoint (Spoke)</p>
+        <p><strong>API:</strong> Configuring App Insights in Hub and sending logs from this Spoke webapp to test the monitoring central solution </p>
+        <p><strong>Front End:</strong> This would be deleted once POC is completed </p>
+    </div>
 </body>
 </html>
